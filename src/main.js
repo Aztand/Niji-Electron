@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require("electron")
+const { app, BrowserWindow, ipcMain } = require("electron") // 添加ipcMain导入
 const path = require("path")
 
 function createWindow() {
@@ -8,42 +8,43 @@ function createWindow() {
     webPreferences: {
       webSecurity: false,
       allowFileAccess: true,
-      preload: path.join(__dirname, "preload.js")
+      preload: path.join(__dirname, "preload.js"),
+      nodeIntegration: false,
+      contextIsolation: true
     }
   })
 
+  // 配置IPC通信
+  configureIPC()
+
   if (process.env.NODE_ENV === "development") {
     console.log("Loading Vite development server...")
-    win.loadURL("http://localhost:5173")
+    win.loadURL("http://localhost:5173/#/login") // 直接打开登录页
     win.webContents.openDevTools()
   } else {
-    win.loadFile(path.join(__dirname, "../.vite/build/renderer/index.html"))
+    // 修正生产环境路径
+    win.loadFile(
+      path.join(__dirname, "../.vite/build/renderer/index.html"),
+      { hash: '/login' }
+    )
   }
+}
+
+// 单独封装IPC配置
+function configureIPC() {
+  ipcMain.handle('login', async (_, { email, password }) => {
+    const response = await fetch('https://nideriji.cn/api/login/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'User-Agent': 'OhApp/3.6.12 Platform/Android'
+      },
+      body: JSON.stringify({ email, password })
+    })
+    return response.json()
+  })
 }
 
 app.whenReady().then(createWindow)
 
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit()
-  }
-})
-
-app.on("activate", () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow()
-  }
-})
-
-// src/main.js
-ipcMain.handle('login', async (_, { email, password }) => {
-  const response = await fetch('https://nideriji.cn/api/login/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'User-Agent': 'OhApp/3.6.12 Platform/Android'
-    },
-    body: JSON.stringify({ email, password })
-  });
-  return response.json();
-});
+// ...保持其他代码不变

@@ -1,5 +1,5 @@
-const { contextBridge, ipcRenderer } = require("electron")
+const { contextBridge, ipcRenderer } = require('electron')
 
-contextBridge.exposeInMainWorld("electronAPI", {
-  sendMessage: message => ipcRenderer.send("message", message)
+contextBridge.exposeInMainWorld('electronAPI', {
+  login: (credentials) => ipcRenderer.invoke('login', credentials)
 })

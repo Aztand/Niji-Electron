@@ -6,7 +6,7 @@ export default defineConfig({
   root: path.resolve(__dirname, "src/renderer"),
   plugins: [react()],
   build: {
-    outDir: "../../.vite/build/renderer",
+    outDir: "../dist/renderer",
     emptyOutDir: true
   }
 })
