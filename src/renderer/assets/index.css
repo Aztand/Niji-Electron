@@ -1,0 +1,1157 @@
+/* ===== 基础变量 ===== */
+@font-face {
+    font-family: 'Ionicons';
+    src: url('Ionicons.ttf') format('truetype');
+}
+:root {
+    /* 颜色 */
+    --color-primary-boy: #4988b4;
+    --color-primary-girl: #ff7074;
+    --color-bg-page: whitesmoke;
+    --color-bg-element: white;
+    --color-shadow-light: #cccccc;
+    --color-shadow-medium: #bbbbbb;
+    --color-shadow-dark: #dddddd;
+    --color-slim-font-black :#666666;
+    --color-border: #000000;
+    --color-pro-gold: gold;
+    --color-light-gray: #dddddd;
+    --color-x-light-gray: #eeeeee;
+    --color-xx-light-gray: #fefefe;
+    --color-self: var(--color-primary-boy);
+    --color-paired: var(--color-primary-girl);
+    --color-button-green: #077F76;
+
+    /* 间距 (1rem=16px) */
+    --space-xxs: 0.25rem;  /* 4px */
+    --space-xs: 0.5rem;    /* 8px */
+    --space-sm: 0.75rem;   /* 12px */
+    --space-md: 1rem;      /* 16px */
+    --space-lg: 1.5rem;    /* 24px */
+    --space-xl: 2rem;      /* 32px */
+    --space-xxl: 2.5rem;   /* 40px */
+    
+    /* 圆角 */
+    --radius-sm: 8px;
+    --radius-md: 24px;
+    --radius-lg: 32px;
+    
+    /* 字号 */
+    --text-xxs: 0.75rem;   /* 12px */
+    --text-xs: 0.875rem;   /* 14px */
+    --text-sm: 1rem;       /* 16px */
+    --text-md: 1.25rem;    /* 20px */
+    --text-lg: 1.5rem;     /* 24px */
+    --text-xl: 2.5rem;     /* 40px */
+    --text-xxl: 3.5rem;     /* 56px */
+    
+    /* 图片路径 */
+    --img-logo: url("logo.png");
+    --img-treehole: url("treehole.png");
+    --img-write: url("write.svg");
+    --img-pic: url("pic.svg");
+    --img-settings: url("settings.svg");
+    --img-new: url("new.svg");
+    --img-save: url("save.svg");
+    --img-delete: url("delete.svg");
+    --img-pair: url("pair.svg");
+    --img-unpair: url("unpair.svg");
+    --img-boy: url("boy.svg");
+    --img-girl: url("girl.svg");
+    --img-wormhole: url("wormhole.svg");
+}
+    
+/* ===== 基础样式 ===== */
+body {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 10% 90%;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--color-bg-page);
+    position: relative;
+}
+
+.hljs {
+    white-space: pre-wrap;  /* 允许代码自动换行 */
+    word-wrap: break-word;  /* 兼容旧浏览器 */
+    overflow-wrap: break-word; /* 现代浏览器换行 */
+    overflow-y: auto;/* 启用垂直滚动 */
+    overflow-x: hidden;      /* 禁用横向滚动 */
+}
+
+.right-page {
+    height: 100vh;
+    overflow-y: auto;
+}
+
+#right-diary {
+    display: grid;
+    grid-template-columns: 25% 75%;
+}
+
+/* 自定义的Swal对话框属性 */
+
+.left-align {
+    text-align: left;
+}
+
+.right-align-item {
+    justify-content: flex-end !important; /* 右对齐 */
+    gap: 10px; /* 控制按钮间距 */
+    width: 100%;
+    padding-right: 5%;
+}
+
+.niji-style-button {
+    background: none;
+    color: var(--color-button-green);
+}
+
+.niji-style-button:hover {
+    cursor: pointer;
+}
+
+/* ===== 设置界面 ===== */
+/* 遮罩层 */
+.settings-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 设置窗口 */
+.settings-window {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* 设置项样式 */
+.setting-item {
+    display: flex;
+    margin: 15px 0;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.setting-item label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: bold;
+}
+
+select, input[type="range"] {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+}
+
+/* 开关样式 */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #333;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+
+/* 关闭按钮 */
+.close-btn {
+    float: right;
+    cursor: pointer;
+    padding: 5px;
+    margin: -10px -10px 0 0;
+}
+
+/* ===== 工具类 ===== */
+.unselectable {
+    cursor: default;
+    user-select: none;
+}
+    
+/* ===== 左侧导航栏 ===== */
+#left-navigation {
+    background-color: var(--color-bg-element);
+    box-shadow: 2px 0px 16px var(--color-shadow-dark);
+    width: 40%;
+    display: block;
+}
+    
+#logo {
+    background-image: var(--img-logo);
+    background-size: 100% 100%;
+    width: 80%;
+    margin: auto;
+    padding-top: 80%;
+}
+
+#icon-list{
+    padding-right: 0.4rem;
+}
+    
+.nav-icon {
+    background-size: 100% 100%;
+    width: 80%;
+    margin-left: 10%;
+    padding-top: 80%;
+    padding-right: 10%;
+    background-repeat: no-repeat;
+    transition: filter 0.3s ease; /* 添加过渡效果 */
+}
+
+.nav-icon.active {
+    filter: drop-shadow(0 0 10px var(--color-self)); /* 发光效果 */
+}
+
+.nav-icon:hover {
+    filter: drop-shadow(0 0 10px var(--color-self)); /* 发光效果 */
+}
+
+#write-logo {
+    background-image: var(--img-write);
+    margin-top: 50%;
+}
+
+#treehole-logo {
+    background-image: var(--img-treehole);
+    margin-top: 20%;
+}
+
+#gallery-logo {
+    background-image: var(--img-pic);
+    margin-top: 20%;
+}
+
+#pair-sys-logo {
+    background-image: var(--img-pair);
+    background-size: 90% 100%;
+    margin-top: 20%;
+}
+
+#settings-logo {
+    background-image: var(--img-settings);
+    position: fixed;
+    left: 0.5vw;
+    bottom: 1vh;
+    margin-top: 0 !important;
+    transform: none !important;
+    z-index: 1000;
+    width: 64px;
+    height: 64px;
+    margin-left: 0;
+    background-size: 80% !important;
+    background-position: center;
+    padding: 0 !important;
+    border-radius: 12px;
+}
+
+.seperate-line {
+    border-bottom: 1px solid var(--color-border);
+    width: 80%;
+    padding-top: 20%;
+    margin: auto;
+}
+    
+/* ===== 日记列表 ===== */
+#diary-card-list {
+    margin-top: var(--space-lg);
+    /* margin-right: var(--space-md); */
+    /* padding-right: var(--space-md); */
+    margin-bottom: var(--space-lg);
+    overflow-y: auto;
+    overflow-x: auto;
+}
+    
+.month-text {
+    font-size: clamp(var(--text-lg), 3vw, var(--text-xl));
+    margin-left: var(--space-xs);
+    white-space: nowrap; /* 禁止文本换行 */
+    overflow: hidden; /* 隐藏溢出的文本 */
+}
+    
+/* ===== 日记卡片 ===== */
+.diary-card {
+    margin: var(--space-lg);
+    margin-left: var(--space-xs);
+    width: auto;
+    height: auto; 
+    min-height: 9rem; 
+    border-radius: var(--radius-md);
+    box-shadow: 1px 1px 10px var(--color-shadow-light);
+    background-color: var(--color-bg-element);
+    display: grid;
+    grid-template-columns: 30% 70%;
+    overflow: hidden; 
+    color: white;
+}
+
+.diary-card:hover {
+    opacity: 0.85;
+    box-shadow: 2px 2px 15px var(--color-shadow-light);
+}
+    
+.card-self { color: var(--color-self); }
+.card-paired { color: var(--color-paired); }
+    
+.card-left {
+    display: grid;
+    /* grid-template-rows: 65% 35%; */
+    padding: 10%;
+}
+    
+.card-day {
+    font-size: clamp(var(--text-md), 3vw, var(--text-xxl));
+    margin: auto;
+    margin-bottom: 0.5vw;
+    cursor: default;
+    user-select: none;
+    white-space: nowrap;
+
+    line-height: 1;
+    height: clamp(var(--text-md), 3vw, var(--text-xxl)); 
+}
+    
+.card-week {
+    font-size: clamp(var(--text-xxs), 1vw, var(--text-md));
+    width: auto;
+    margin: auto;
+    margin-top: 0.5vw;
+    cursor: default;
+    user-select: none;
+    white-space: nowrap;
+}
+    
+.card-right {
+    display: grid;
+    grid-template-rows: 1.5rem 2rem 3.5rem;
+    padding: 1rem 1rem 1rem 0.5rem;
+    margin-left: -5%;
+}
+    
+.card-time {
+    cursor: default;
+    user-select: none;
+}
+    
+.card-title {
+    font-size: var(--text-md);
+    cursor: default;
+    user-select: none;
+    white-space: nowrap; /* 禁止文本换行 */
+    overflow: hidden; /* 隐藏溢出的文本 */
+    text-overflow: ellipsis; /* 使用省略号表示被隐藏的文本 */
+}
+
+/* 多行文本截断样式 保持兼容性 */
+.card-simple {
+    font-size: var(--text-md);
+    cursor: default;
+    user-select: none;
+
+    overflow: hidden;
+    display: box;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    -webkit-box-orient: vertical;
+    -ms-flex-direction: column;
+    -webkit-line-clamp: 2;
+    /* 限制在3行内 */
+    line-clamp: 2;
+}
+    
+/* ===== 写作页面 ===== */
+#write-page {
+    border-radius: var(--radius-lg);
+    box-shadow: 2px 2px 16px var(--color-shadow-medium);
+    margin: 3% 5% 5% 10%;
+    width: 70%;
+    height: 90%;
+    background-color: var(--color-bg-element);
+    position: relative; /* 为绝对定位元素提供锚点 */
+}
+
+/* 日期选择器容器 */
+#date-picker-container {
+    position: absolute;
+    right: var(--space-xxl);
+    top: calc(var(--space-xl) + 8px); /* 与标题输入框对齐 */
+}
+
+#date-input {
+    font-size: var(--text-md); /* 与正文相同字号 */
+    font-family: inherit;
+    border: 1px solid var(--color-shadow-light);
+    border-radius: var(--radius-sm);
+    padding: var(--space-xxs);
+    color: black;
+    background: var(--color-bg-element);
+    transition: all 0.2s;
+}
+
+#date-input:hover {
+    border-color: black;
+}
+
+#date-input:focus {
+    outline: 2px solid black;
+    border-color: transparent;
+}
+
+/* 新增不可编辑状态样式 */
+#write-page[data-editable="false"] #title-input,
+#write-page[data-editable="false"] #diary-input {
+    background-color: inherit; /* 保持原有背景 */
+    cursor: text; /* 保持文本光标 */
+    opacity: 1; /* 移除透明度变化 */
+}
+#title-input:disabled,
+#diary-input:disabled {
+    background-image: none; /* 移除默认灰色背景 */
+}
+
+#title-input {
+    font-size: var(--text-xl);
+    font-weight: bold;
+    margin-top: var(--space-xl);
+    margin-left: var(--space-xxl);
+    width: 90%;
+    height: 60px;
+    border: none;
+    outline: none;
+}
+    
+#title-line {
+    height: 2px;
+    background-color: var(--color-border);
+    width: 90%;
+    margin-left: 5%;
+}
+    
+#diary-input,#preview-content {
+    /* 尺寸定位 */
+    position: absolute;
+    top: calc( var(--space-xl) + 100px ); /* 标题下沿计算 */
+    bottom: var(--space-xl);
+    /* 改用边缘定位替代百分比宽度 */
+    left: var(--space-xxl);
+    right: var(--space-xxl);
+    width: auto; /* 让宽度由左右定位自动计算 */
+    height: auto !important;/* 移除height属性，由top/bottom计算高度 */
+    margin-left: 0; /* 清除原有外边距 */
+    margin: 0;
+    margin-top: 0; /* 清除旧版margin-top */
+
+    /* 文本样式 */
+    font: 100 1.5em/1.6 'PingFang SC', -apple-system, sans-serif;
+    letter-spacing: 0.03em;
+    text-rendering: optimizeLegibility;
+
+    /* 背景与边框 */
+    background: inherit;
+    border: none;
+    outline: none;
+
+    /* 内边距 */
+    padding: 0.8rem 1.2rem;
+
+    /* 滚动条 */
+    overflow-y: auto;
+}
+
+#preview-content p img{
+    max-width: 80%; 
+    margin: 5px 0;
+}
+
+/* 补充盒模型设置 */
+#diary-input {
+    box-sizing: border-box; /* 包含padding在宽度内 */
+    resize: none;
+}
+
+/* 段落间距 */
+#diary-input p {
+    margin-bottom: 1.2em;
+}
+    
+/* 预览区特定优化 */
+#preview-content {
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
+.timetag-line {
+    margin: 0;
+    padding-left: var(--space-xs);
+    padding-right: var(--space-xs);
+    background-color: var(--color-light-gray);
+    color: var(--color-slim-font-black);
+    border-radius: var(--radius-sm);
+}
+.time-icon {
+    font-variant-emoji: text;
+}
+
+/* 段落间距继承 */
+#preview-content p {
+    margin-bottom: 1.2em;
+    margin: 0;
+}
+
+/* 图片自适应调整 */
+#preview-content img {
+    max-width: 65%;
+    margin: 0.8em 0; /* 与段落间距匹配 */
+    vertical-align: top; /* 解决基线对齐问题 */
+}
+
+/* 隐藏原始文本域 */
+#diary-input.hidden {
+    display: none; /* 替代原opacity隐藏方案 */
+}
+
+#count-and-readmark {
+    position: absolute;
+    bottom: var(--space-xs);
+    right: var(--space-xxl);
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--color-slim-font-black);
+}
+
+/* ===== 浮动按钮 ===== */
+#floatMenuBar {
+    width: 72px;
+    text-align: center;
+    padding: 0;
+    position: absolute;
+    bottom: 5%;
+    right: -6rem;
+}
+    
+.floatMenuButton {
+    margin-top: var(--space-md);
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: var(--color-self);
+    background-size: 70% 70%;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.floatMenuButton[hidden] {
+    opacity: 0 !important;
+    visibility: hidden;
+}
+
+#newMenuButton { 
+    background-image: var(--img-new); 
+    display: block !important; /* 强制覆盖其他样式 */
+    opacity: 1 !important;
+    visibility: visible !important;
+    background-size: 90%;
+}
+#saveMenuButton {
+     background-image: var(--img-save); 
+     transition: opacity 0.3s ease;
+     background-size: 70%;
+}
+#deleteMenuButton { 
+    background-image: var(--img-delete); 
+    background-size: 70%;
+}
+
+/*删除动画样式*/
+.fade-out {
+    animation: fadeOut 0.3s ease-out forwards;
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(0.95); }
+}
+
+/* 旋转圆环动画 */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.loading-spinner {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 4px solid transparent;
+    border-top-color: var(--color-self);
+    animation: spin 1s linear infinite;
+    background-color: transparent;
+    box-sizing: border-box;
+}
+
+/*右上角用户头像及简单卡片*/
+#user-profile {
+    position: fixed;
+    top: var(--space-xl);
+    right: var(--space-xl);
+    z-index: 1000;
+}
+
+#user-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid var(--color-bg-element);
+    box-shadow: 0 2px 8px var(--color-shadow-medium);
+    transition: transform 0.3s ease;
+    overflow: hidden;
+}
+
+#user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#user-info-card {
+    position: absolute;
+    top: 100px;
+    right: 0;
+    width: 240px;
+    background: var(--color-bg-element);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 4px 12px var(--color-shadow-medium);
+    padding: var(--space-md);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    transform: translateY(-10px);
+}
+
+#user-profile:hover #user-info-card {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+#user-info-card h3 {
+    margin: 0;
+    display: inline-flex;
+    color: var(--color-self);
+    font-size: var(--text-md);
+}
+
+#pro-tag{
+    display: inline-flex;
+    background-color: var(--color-pro-gold);
+    color: white;
+    margin-left: var(--space-sm);
+    border-radius: var(--radius-sm);
+    padding-left: var(--space-xs);
+    padding-right: var(--space-xs);
+    padding-top: 0;
+    padding-bottom: var(--space-xxs);
+}
+
+#user-info-card p {
+    margin: var(--space-xs) 0;
+    font-size: var(--text-sm);
+    color: var(--color-slim-font-black);
+}
+
+#logout {
+    cursor: pointer;
+    text-align: right;
+    text-decoration: underline
+}
+
+.info-line {
+    height: 1px;
+    background: var(--color-shadow-light);
+    margin: var(--space-xs) 0;
+}
+
+/* 快捷键提示栏 */
+#Hotkey-tip-container {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: var(--text-xs);
+    color: var(--color-slim-font-black);
+    margin: 0;
+}
+
+#Hotkey-tip {
+    margin: 0;
+    cursor: pointer;
+}
+
+
+
+/* 新增切换按钮样式 */
+.toggle-switch {
+    position: absolute;
+    right: calc(var(--space-xxl)); /* 与日期选择器对齐 */
+    top: calc( var(--space-xl) + 62px );
+    display: flex;
+    gap: var(--space-md);
+    background: var(--color-bg-element);
+    padding: var(--space-xxs) var(--space-xs);
+    border-radius: var(--radius-sm);
+}
+
+.toggle-switch button {
+    position: relative;
+    border: none;
+    background: none;
+    font-size: var(--text-sm);
+    color: var(--color-slim-font-black);
+    padding: var(--space-xxs) var(--space-sm);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.toggle-switch button::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--color-border);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toggle-switch button.active {
+    color: var(--color-border);
+}
+
+.toggle-switch button.active::after {
+    width: 100%;
+}
+
+/* 状态切换动画 */
+.hidden {
+    display: none !important;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    transform: translateY(10px);
+}
+
+[data-mode="active"] {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/*大图库相关样式*/
+#upload-container {
+    display: flex;
+    align-items: center;
+    margin-top: var(--space-sm);
+    margin-bottom: var(--space-md);
+}
+
+#upload-frame {
+    margin-left: 15%;
+    width: 70%;
+    height: 150px;
+    border: 2px dashed var(--color-slim-font-black); /* 虚线边框 */
+    border-radius: var(--radius-sm); /* 圆角 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative; /* 为子元素定位 */
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+#upload-frame:hover {
+    border-color: var(--color-border);
+}
+
+#pic-upload {
+    display: none;
+}
+
+#upload-button-area {
+    margin-left: var(--space-md);
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+#upload-button-area button {
+    padding: var(--space-md) var(--space-lg);
+    font-size: var(--text-md);
+    color: whitesmoke;
+    background-color: var(--color-primary-boy);
+    border: none;
+    border-radius: var(--radius-sm);
+    transition: background-color 0.3s ease;
+}
+
+#upload-button-area button:hover {
+    background-color: var(--color-primary-boy);
+    box-shadow: 0 var(--space-xs) var(--space-xs) var(--color-shadow-light);
+}
+
+#QRcode-card {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 256px;
+    height: 266px;
+    background: var(--color-bg-element);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 12px var(--color-shadow-medium);
+    padding: var(--space-md);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    transform: translateY(-10px);
+    text-align: center;
+}
+
+#QRcode-card img {
+    margin: 5%;
+    width: 90%;
+    height: 90%;
+}
+
+#QRcode-btn:hover + #QRcode-card {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* 预览列表容器的样式 */
+#upload-preview-list {
+    display: flex;
+    padding-left: 10px;
+    overflow-x: auto; /* 允许水平滚动 */
+    gap: 10px; /* 图片之间的间距 */
+    margin-left: 15%;
+    width: 70%;
+    height: 110px;
+    background-color: #ffe9a7; /* 背景颜色 */
+    border-radius: 8px; /* 圆角 */
+    margin-top: 20px; /* 上边距 */
+    overflow-y: hidden;
+}
+
+.preview-container {
+    position: relative;
+    display: inline-block;
+    margin: 5px;
+}
+
+.delete-btn {
+    position: absolute;
+    top: 10px;
+    right: 0px;
+    color: black;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 900;
+}
+
+
+/* 预览图像的样式 */
+.upload-preview {
+    width: 80px; /* 预览图像的宽度 */
+    height: 80px; /* 预览图像的高度 */
+    margin-top: 10px;
+    display: block;
+    object-fit: cover; /* 保持图像比例并填充容器 */
+    border-radius: 6px; /* 圆角 */
+    border: 2px solid #ddd; /* 边框 */
+    transition: transform 0.2s ease, border-color 0.2s ease; /* 过渡效果 */
+}
+
+/* 鼠标悬停时的效果 */
+.upload-preview:hover {
+    transform: scale(1.05); /* 放大效果 */
+    border-color: #007bff; /* 边框颜色变化 */
+}
+
+/* 设置图库容器的样式 */
+#gallery-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* 使图片在容器中均匀居中 */
+    gap: 20px; /* 设置图片之间的间距 */
+    padding: 20px; /* 设置容器的内边距 */
+}
+
+/* 设置每个图片容器的样式 */
+.pic-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white; /* 白色背景画框 */
+    padding: 10px; /* 设置画框的内边距 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+    border-radius: 8px; /* 设置画框的圆角 */
+}
+
+/* 设置图片背景的样式 */
+.pic-background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px; /* 设置画框的宽度 */
+    height: 150px; /* 设置画框的高度 */
+    background-color: #f0f0f0; /* 设置图片背景颜色 */
+    border-radius: 4px; /* 设置图片背景的圆角 */
+}
+
+/* 设置图片的样式 */
+.pic-background img {
+    max-width: 100%; /* 图片最大宽度为画框宽度 */
+    max-height: 100%; /* 图片最大高度为画框高度 */
+    object-fit: contain; /* 保持图片原比例 */
+    border-radius: 4px; /* 设置图片的圆角 */
+}
+
+/* 设置图片编号的样式 */
+.pic-container p {
+    margin-top: 10px; /* 设置编号与画框的距离 */
+    margin-bottom: 0;
+    font-size: 14px; /* 设置编号的字体大小 */
+    color: #333; /* 设置编号的字体颜色 */
+}
+
+.pair-page {
+    height: 100vh;
+    overflow-y: auto ;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 水平居中 */
+    justify-content: center; /* 垂直居中，如果需要的话 */
+    text-align: center; /* 文本居中 */
+}
+
+.pair-back-btn {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 96px;
+    font-family: 'Ionicons';
+    cursor: pointer;
+    color: var(--color-self);
+}
+
+.pair-page p{
+    text-align: center;
+    color: #666666;
+    font-family: '等线';
+    font-size: 24;
+    max-width: 60vw;
+}
+
+#paired-name-span {
+    color: var(--color-paired);
+}
+
+.pair-logo {
+    width: 20vw;
+    height: 20vw;
+    margin-top: -20vw;
+    background-repeat: round;
+}
+
+.unpair-logo-img{
+    background-image: var(--img-unpair-logo);
+}
+
+.pair-logo-img {
+    background-image: var(--img-pair);
+}
+
+.unknow-name-container {
+    position: absolute;
+    top: 20vh;
+    display: flex;
+}
+
+.unknow-name-container img{
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+}
+
+.pair-logo-small {
+    width: 64px;
+    height: 64px;
+    margin: 32 64px;
+    background-image: var(--img-pair);
+    background-size: 100%;
+}
+
+.unpair-name-pairAvatar {
+    height: 128px;
+    width: 128px;
+    background-color: var(--color-paired);
+    border-radius: 50%;
+}
+
+.wormhole-logo {
+    background-image: var(--img-wormhole) !important;
+    background-size: cover !important;
+    width: 15vw !important;
+    height: 15vw !important;
+    margin-bottom: 10vh !important;
+    margin-top: -10vh !important;
+    animation: rotate 5s linear infinite !important; /* 旋转动画，5秒转一圈，无限循环 */
+  }
+
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+#pair-title {
+    font-size: 64 !important;
+    margin: 0;
+}
+
+.pair-buttons {
+    position: absolute;
+    bottom: 4vh;
+    align-items: center;
+}
+
+.pair-buttons button{
+    border: solid;
+    border-width: thin;
+    border-color: var(--color-self);
+    color: var(--color-self);
+    background-color: white;
+    font-size: var(--text-lg);
+    height: 64px;
+    width: 512px;
+    border-radius: var(--radius-sm);
+    margin: var(--space-sm);
+    font-family: '等线', 'Ionicons';
+    padding-bottom: 10px;
+    display: block;
+}
+
+.know-name-btn {
+    padding-bottom: 0 !important;
+}
+
+.asking-name-btn {
+    padding-bottom: 0 !important;
+    border: none !important;
+    color: white !important;
+    background-color: var(--color-shadow-light) !important;
+}
+
+input.pair-input {
+    position: absolute;
+    bottom: 20vh;
+    width: 640px;
+    height: 64px;
+    border: none;
+    border-bottom: solid;
+    border-color: var(--color-self);
+    text-align: center;
+    font-size: 24px;
+    font-family: '等线';
+    outline: none;
+    color: var(--color-self);
+    background: none;
+}
+
+input.pair-input::placeholder {
+    color: var(--color-self);
+}
+
+.send-direct-btn {
+    padding: 0 !important;
+}
+
+.pair-buttons button:active{
+    border: inset;
+}
+
+span.Ionicon-xl {
+    font-size: var(--text-xl) !important;
+    transform: translateY(7px);
+    display: inline-block;
+}
+
+.full-color-btn {
+    border: none !important;
+    background-color: var(--color-self) !important;
+    padding: 0 !important;
+    color: white !important;
+}
+.full-color-btn:hover {
+    box-shadow: 0px 4px 8px var(--color-shadow-light) !important;
+}

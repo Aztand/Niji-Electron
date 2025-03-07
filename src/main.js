@@ -6,6 +6,8 @@ function createWindow() {
     width: 1600,
     height: 900,
     webPreferences: {
+      webSecurity: false,
+      allowFileAccess: true,
       preload: path.join(__dirname, "preload.js")
     }
   })
@@ -32,3 +34,16 @@ app.on("activate", () => {
     createWindow()
   }
 })
+
+// src/main.js
+ipcMain.handle('login', async (_, { email, password }) => {
+  const response = await fetch('https://nideriji.cn/api/login/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'User-Agent': 'OhApp/3.6.12 Platform/Android'
+    },
+    body: JSON.stringify({ email, password })
+  });
+  return response.json();
+});
