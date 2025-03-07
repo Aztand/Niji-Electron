@@ -1,0 +1,80 @@
+{
+  "name": "electron-react-vite-forge",
+  "version": "1.0.0",
+  "main": ".vite/build/main.js",
+  "scripts": {
+    "dev": "vite",
+    "start": "electron-forge start",
+    "electron:dev": "cross-env NODE_ENV=development electron-forge start",
+    "build": "vite build",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ],
+      "plugins": [
+        {
+          "name": "@electron-forge/plugin-vite",
+          "config": {
+            "build": [
+              {
+                "entry": "src/main.js",
+                "config": "vite.main.config.js"
+              },
+              {
+                "entry": "src/preload.js",
+                "config": "vite.preload.config.js"
+              }
+            ],
+            "renderer": [
+              {
+                "name": "main_window",
+                "config": "vite.renderer.config.js"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "electron-squirrel-startup": "^1.0.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.4.2",
+    "@electron-forge/maker-deb": "^6.4.2",
+    "@electron-forge/maker-rpm": "^6.4.2",
+    "@electron-forge/maker-squirrel": "^6.4.2",
+    "@electron-forge/maker-zip": "^6.4.2",
+    "@electron-forge/plugin-auto-unpack-natives": "^6.4.2",
+    "@electron-forge/plugin-vite": "^6.4.2",
+    "@vitejs/plugin-react": "^3.1.0",
+    "cross-env": "^7.0.3",
+    "electron": "^23.3.13",
+    "vite": "^4.5.9"
+  }
+}
