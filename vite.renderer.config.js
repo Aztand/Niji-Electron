@@ -1,12 +1,20 @@
-import { defineConfig } from "vite"
-import react from "@vitejs/plugin-react"
-import path from "path"
+// vite.renderer.config.js
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  root: path.resolve(__dirname, "src/renderer"),
   plugins: [react()],
+  
+  // 添加以下配置
+  resolve: {
+    extensions: ['.js', '.jsx', '.json'], // 支持的文件扩展名
+    alias: {
+      '@': '/src/renderer' // 可选：配置路径别名
+    }
+  },
+  
   build: {
-    outDir: "../dist/renderer",
+    outDir: '../.vite/build/renderer',
     emptyOutDir: true
   }
 })
